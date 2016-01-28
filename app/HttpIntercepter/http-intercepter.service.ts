@@ -26,7 +26,7 @@ export class HttpIntercepter {
         .subscribe(res => {
             console.log(res);
         });
-        this._http.request('http://api.learn4me.com/api/user/code/6',this.constructRequestData(
+        this._http.request('http://local.learn4me.com:9000/api/user/code/6',this.constructRequestData(
             "POST",
             {name: "开放测试", description: "不要点开"}
         )).subscribe(
