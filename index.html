@@ -14,10 +14,10 @@
     <script src="node_modules/angular2/bundles/http.dev.js"></script>
     <script src="node_modules/angular2/bundles/testing.dev.js"></script>
 
-    <!--<!-- Add the router library 
-    <script src="node_modules/angular2/bundles/router.dev.js"></script>
+    <!--Add the router library -->
+    <!--<script src="node_modules/angular2/bundles/router.dev.js"></script>-->
     <!-- ace editor-->
-    <!--<script src="bower_components/ace-builds/src/ace.js"></script>-->-->-->
+    <!--<script src="bower_components/ace-builds/src/ace.js"></script>-->
     
     <!-- Add test library -->
     <link rel="stylesheet" href="node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
@@ -49,6 +49,7 @@
         'app': {defaultExtension: 'js'}
         }
     });
+    //test need
          System.import('angular2/src/platform/browser/browser_adapter').then(function(browser_adapter) {
             browser_adapter.BrowserDomAdapter.makeCurrent();
         })   

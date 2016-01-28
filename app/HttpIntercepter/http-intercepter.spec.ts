@@ -5,12 +5,12 @@ import {it, describe, expect, inject, injectAsync, beforeEachProviders} from 'an
 import {HTTP_PROVIDERS, Http, Response } from 'angular2/http';
 describe('HttpIntercepter', () => {
     beforeEachProviders(() => [
+        HttpIntercepter,
         HTTP_PROVIDERS,
         UserService,
         Cookie
     ]);
-    it('HttpIntercepter',inject([Http,UserService,Cookie], (http:Http,userService:UserService) => {
-        var httpIntercepter = new HttpIntercepter(http,userService);
+    it('HttpIntercepter',inject([HttpIntercepter,Http,UserService,Cookie], (httpIntercepter:HttpIntercepter) => {
         httpIntercepter.callHttp();
     }));
 })
