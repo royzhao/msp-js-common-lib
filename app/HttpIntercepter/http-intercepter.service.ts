@@ -1,25 +1,56 @@
 import {Component,Injectable} from 'angular2/core';
 import {Http,Headers,RequestOptionsArgs,RequestOptions} from 'angular2/http';
+import {Observable,Subscription} from "rxjs/Rx";
 import {UserService} from '../UserService/user.service';
 
+var apiServiceUrlRoot = '/';
 @Injectable()
 export class HttpIntercepter {
     constructor(
         private _http: Http,
         private _userService: UserService) {}
-    private constructHeader(){
+    private constructHeader(): Headers{
         var headers:Headers = new Headers();
         headers.append("x-session-token",this._userService.getUserToken());
         headers.append('Content-Type', 'application/json');
         return headers;
     }
-    private constructRequestData(method:string,data:any){
+    private constructRequestData(method:string,data:any): RequestOptionsArgs{
         var args:RequestOptionsArgs = new RequestOptions({
             headers:this.constructHeader(),
             method:method,
             body:JSON.stringify(data)
         });
         return args;
+    }
+    private isNeedCheckAuth(method:string): boolean{
+        if(
+            method == "POST"||
+            method == "PUT" ||
+            method == "DELETE"
+        ){
+            return true;
+        }
+        return false;
+    }
+    public callApi(url:string,method:string,data?:any):Observable<any>{
+        if(this.isNeedCheckAuth(method)){
+            //is login?
+            if(this._userService.isLogin() == false){
+                //error need login
+            }
+        }
+        return this._http.request(url,this.constructRequestData(
+            method,
+            data
+        ))
+        .map(res => {
+          return res;  
+        })
+        .catch(err => {
+            console.log(err.json());
+            return Observable.throw(err);
+        })
     }
     callHttp(url?:string,method?:string,data?:any){
         this._http.get('tsd.json')
@@ -29,7 +60,14 @@ export class HttpIntercepter {
         this._http.request('http://local.learn4me.com:9000/api/user/code/6',this.constructRequestData(
             "POST",
             {name: "开放测试", description: "不要点开"}
-        )).subscribe(
+        ))
+        .map(res => res.json())
+
+        .catch(err => {
+        console.log(err.json());
+        return Observable.throw(err);
+        })
+        .subscribe(
             res =>{
                 console.log(res);
             },
