@@ -19,7 +19,7 @@ export class HttpIntercepter {
         var args:RequestOptionsArgs = new RequestOptions({
             headers:this.constructHeader(),
             method:method,
-            body:JSON.stringify(data)
+            body:(data==undefined? null:JSON.stringify(data))
         });
         return args;
     }
@@ -45,9 +45,11 @@ export class HttpIntercepter {
             data
         ))
         .map(res => {
+            //TODO do something object convert 
           return res;  
         })
         .catch(err => {
+            //TODO handler exception
             console.log(err.json());
             return Observable.throw(err);
         })
@@ -57,7 +59,7 @@ export class HttpIntercepter {
         .subscribe(res => {
             console.log(res);
         });
-        this._http.request('http://local.learn4me.com:9000/api/user/code/6',this.constructRequestData(
+        this._http.request('/api/user/code/6',this.constructRequestData(
             "POST",
             {name: "开放测试", description: "不要点开"}
         ))
