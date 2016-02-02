@@ -1,6 +1,7 @@
 import {Component,Injectable} from 'angular2/core';
 import {Http,Headers,RequestOptionsArgs,RequestOptions} from 'angular2/http';
 import {Observable,Subscription} from "rxjs/Rx";
+import {ResponseConvert2Object} from '../Type/convert-response.interface';
 import {UserService} from '../UserService/user.service';
 
 var apiServiceUrlRoot = '/';
@@ -33,7 +34,7 @@ export class HttpIntercepter {
         }
         return false;
     }
-    public callApi(url:string,method:string,data?:any):Observable<any>{
+    public callApi(url:string,method:string,convertF:ResponseConvert2Object,data?:any):Observable<any>{
         if(this.isNeedCheckAuth(method)){
             //is login?
             if(this._userService.isLogin() == false){
@@ -45,46 +46,36 @@ export class HttpIntercepter {
             data
         ))
         .map(res => {
-            //TODO do something object convert 
-          return res;  
+            //TODO check is status  200
+            switch(res.status){
+                case 200:
+                    return res.json();
+                case 401:
+                    //TODO to login
+                    window.alert("need login");
+                    // return Observable.throw('you don`t have the authorization! please login first ');
+                default:
+                    return Observable.throw('somthing wrong ');
+            }
+        })
+        .map(res=>{
+             //TODO do something object convert 
+            if(convertF == undefined){
+                return res;
+            }
+            var dest = convertF(res);
+            if( dest != undefined &&
+                dest != null
+            ){
+                return dest;
+            }else{
+                return Observable.throw({err:'can`t convert to object'});
+            }           
         })
         .catch(err => {
             //TODO handler exception
             console.log(err.json());
             return Observable.throw(err);
         })
-    }
-    callHttp(url?:string,method?:string,data?:any){
-        this._http.get('tsd.json')
-        .subscribe(res => {
-            console.log(res);
-        });
-        this._http.request('/api/user/code/6',this.constructRequestData(
-            "POST",
-            {name: "开放测试", description: "不要点开"}
-        ))
-        .map(res => res.json())
-
-        .catch(err => {
-        console.log(err.json());
-        return Observable.throw(err);
-        })
-        .subscribe(
-            res =>{
-                console.log(res);
-            },
-            err =>{
-                console.log(err);
-            },
-            () =>{
-                console.log("complete");
-            }
-        )
-        
-    if(this._userService.isLogin()){
-        console.log('ok');
-    }
-        console.log("httpIntercepter!");
-
     }
 }

@@ -2,26 +2,15 @@ import {HttpIntercepter} from './http-intercepter.service';
 import {UserService} from '../UserService/user.service';
 import {Cookie} from '../CookieService/cookie.service';
 import {it, describe, expect, inject, injectAsync, beforeEachProviders} from 'angular2/testing';
-import {HTTP_PROVIDERS, Http, Response,BaseRequestOptions ,XHRBackend} from 'angular2/http';
+import {HTTP_PROVIDERS, Http, Response,BaseRequestOptions ,XHRBackend,ResponseOptions} from 'angular2/http';
 import {MockBackend} from 'angular2/http/testing';
 import {provide,Injector} from 'angular2/core';
+import {ResponseConvert2Object} from '../Type/convert-response.interface';
 
 describe('HttpIntercepter', () => {
-    // beforeEachProviders(() => [
-    //     HttpIntercepter,
-    //     HTTP_PROVIDERS,
-    //     UserService,
-    //     BaseRequestOptions,
-    //     Cookie
-    // ]);
-
-    // it('HttpIntercepter',inject([HttpIntercepter,Http,UserService,Cookie], (httpIntercepter:HttpIntercepter) => {
-    //     httpIntercepter.callHttp();
-
-    // }));
     
     
-    it('should get a response', () => {
+    it('should get a right response', () => {
         var connection; //this will be set when a new connection is emitted from the backend.
         var text; //this will be set from mock response
         var injector = Injector.resolveAndCreate([
@@ -38,25 +27,39 @@ describe('HttpIntercepter', () => {
                     deps: [MockBackend]
                 }
             )
-            // bind(Http).toFactory((backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
-            //         return new Http(backend, defaultOptions);
-            //     }, [
-            //         MockBackend,
-            //         BaseRequestOptions
-            //     ]),
         ]);
         var backend = injector.get(MockBackend);
         var http = injector.get(Http);
         backend.connections.subscribe(c => connection = c);
-        // http.request('something.json').subscribe(res => {
-        //     text = res.text();
-        // });
+
         var httpIntercepter = injector.get(HttpIntercepter);
-        httpIntercepter.callApi('test.json','GET').subscribe(res =>{
-            text = res.text();
-        })
-        connection.mockRespond(new Response({body: 'Something'}));
-        expect(text).toBe('Something');
+        var convert2Object = function(source: Response): any{
+            if(source == undefined){
+                return null;
+            }
+            console.log("convert ok");
+            return source;
+        }
+        httpIntercepter.callApi('test.json','GET',convert2Object).subscribe(
+            res =>{
+                text = res;
+            },
+            err =>{
+                text = err.message;
+            }
+        )
+
+        connection.mockRespond(
+            new Response(
+                new ResponseOptions(
+                    {
+                        body: {data:'Something'},
+                        status:200
+                    }
+                )
+            )
+        );
+        expect(text.data).toBe('Something');
     });
 })
 
