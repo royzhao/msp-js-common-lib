@@ -34,7 +34,7 @@ export class HttpIntercepter {
         }
         return false;
     }
-    public callApi(url:string,method:string,convertF:ResponseConvert2Object,data?:any):Observable<any>{
+    public callApi(url:string,method:string,convertF?:ResponseConvert2Object,data?:any):Observable<any>{
         if(this.isNeedCheckAuth(method)){
             //is login?
             if(this._userService.isLogin() == false){
@@ -52,7 +52,8 @@ export class HttpIntercepter {
                     return res.json();
                 case 401:
                     //TODO to login
-                    window.alert("need login");
+                    // window.alert("need login");
+                    return Observable.throw(new Error('you don`t have the authorization! please login first '));
                     // return Observable.throw('you don`t have the authorization! please login first ');
                 default:
                     return Observable.throw('somthing wrong ');

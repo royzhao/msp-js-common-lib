@@ -54,7 +54,7 @@ describe('HttpIntercepter', () => {
                 new ResponseOptions(
                     {
                         body: {data:'Something'},
-                        status:200
+                        status:401
                     }
                 )
             )
