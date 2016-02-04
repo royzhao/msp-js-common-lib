@@ -24,14 +24,14 @@ export class OpenApi {
             null
         );
     };
-    getCodeById(id:number){
+    getCodeById(id:number):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+id,
             "GET",
             null
         );
     };
-    addCode2User(userid:number,codeinfo:Code){
+    addCode2User(userid:number,codeinfo:Code):Observable<any>{
         return this._service.callApi(
             baseUrl+"/user/code/"+userid,
             "POST",
@@ -39,7 +39,7 @@ export class OpenApi {
             codeinfo
         );
     };
-    updateCode(userid:number,codeinfo:Code){
+    updateCode(userid:number,codeinfo:Code):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+userid+"/"+codeinfo.id,
             "PUT",
@@ -48,26 +48,26 @@ export class OpenApi {
         );
 
     };
-    deleteCode(userid:number,codeid:number){
+    deleteCode(userid:number,codeid:number):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+userid+"/"+codeid,
             "DELETE"
         );
 
     };
-    getCodeSteps(codeid:number){
+    getCodeSteps(codeid:number):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+codeid+"/step",
             "GET"
         );
     };
-    getCodeStepById(codeid:number,stepid:number){
+    getCodeStepById(codeid:number,stepid:number):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+codeid+"/step/"+stepid,
             "GET"
         );
     };
-    addCodeStep(userid:number,codeid:number,codestep:CodeStep){
+    addCodeStep(userid:number,codeid:number,codestep:CodeStep):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+userid+"/"+codeid+"/step",
             "POST",
@@ -76,7 +76,7 @@ export class OpenApi {
         );
 
     };
-    updateCodeStepCmd(userid:number,codeid:number,stepid:number,data:Array<CodeStepCmd>){
+    updateCodeStepCmd(userid:number,codeid:number,stepid:number,data:Array<CodeStepCmd>):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+userid+"/"+codeid+"/step/"+stepid+"/cmd",
             "PUT",
@@ -84,7 +84,7 @@ export class OpenApi {
             data
         )
     };
-    updateCodeStep(userid:number,codeid:number,stepid:number,codestep:CodeStep){
+    updateCodeStep(userid:number,codeid:number,stepid:number,codestep:CodeStep):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+userid+"/"+codeid+"/step/"+stepid,
             "PUT",
@@ -93,20 +93,20 @@ export class OpenApi {
         );
 
     };
-    deleteCodeStep(userid:number,codeid:number,stepid:number){
+    deleteCodeStep(userid:number,codeid:number,stepid:number):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+userid+"/"+codeid+"/step/"+stepid,
             "DELETE"
         );
 
     };
-    getCodeStepDetail(codeid:number,stepid:number){
+    getCodeStepDetail(codeid:number,stepid:number):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+codeid+"/step/"+stepid+"/detail",
             "GET"
         );
     };
-    updateCodeStepDetail(userid:number,codeid:number,stepid:number,codestepdetail:CodeDetail){
+    updateCodeStepDetail(userid:number,codeid:number,stepid:number,codestepdetail:CodeDetail):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+userid+"/"+codeid+"/step/"+stepid+"/detail",
             "PUT",
@@ -115,7 +115,7 @@ export class OpenApi {
         );
 
     };
-    coderun(imageid:number,runinfo:RunInfo){
+    coderun(imageid:number,runinfo:RunInfo):Observable<any>{
         return this._service.callApi(
             baseUrl+"/coderun/"+imageid,
             "PUT",
@@ -124,14 +124,14 @@ export class OpenApi {
         );
 
     };
-    coderunRes(runid:string){
+    coderunRes(runid:string):Observable<any>{
         return this._service.callApi(
             baseUrl+"/coderun/"+runid,
             "GET"
         );
 
     };
-    updateCodeStar(userid:number,codeid:number){
+    updateCodeStar(userid:number,codeid:number):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/star/"+userid+"/"+codeid,
             "PUT",
@@ -139,7 +139,7 @@ export class OpenApi {
             {userid:userid,codeid:codeid}
         );
     };
-    getHotCodes(page:number,num:number,key?:string){
+    getHotCodes(page:number,num:number,key?:string):Observable<any>{
         if(page <=0){
             page = 1;
         }
@@ -154,7 +154,7 @@ export class OpenApi {
             "GET"
         );
     };
-    getCodeIssues(codeid:number,page:number,num:number,key?:string){
+    getCodeIssues(codeid:number,page:number,num:number,key?:string):Observable<any>{
         if(page <=0){
             page = 1;
         }
@@ -169,7 +169,7 @@ export class OpenApi {
             "GET"
         );
     };
-    addCodeIssue(userid:string,codeid:string,obj:Issue){
+    addCodeIssue(userid:string,codeid:string,obj:Issue):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+userid+"/"+codeid+"/issue",
             "POST",
@@ -177,7 +177,7 @@ export class OpenApi {
             obj
         );
     };
-    updateCodeIssue(userid:number,codeid:number,issueid,obj:Issue){
+    updateCodeIssue(userid:number,codeid:number,issueid,obj:Issue):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+userid+"/"+codeid+"/issue/"+issueid,
             "PUT",
@@ -185,13 +185,13 @@ export class OpenApi {
             obj
         );
     };
-    deleteCodeIssue(userid:number,codeid:number,issueid:number){
+    deleteCodeIssue(userid:number,codeid:number,issueid:number):Observable<any>{
         return this._service.callApi(
             baseUrl+"/code/"+userid+"/"+codeid+"/issue/"+issueid,
             "DELETE"
         );
     };
-    getIssuesComments(issueid:number,page:number,num:number,key?:string){
+    getIssuesComments(issueid:number,page:number,num:number,key?:string):Observable<any>{
         if(page <=0){
             page = 1;
         }
@@ -206,7 +206,7 @@ export class OpenApi {
             "GET"
         );
     };
-    addCodeIssueComment(userid:number,issueid:number,obj:Comment){
+    addCodeIssueComment(userid:number,issueid:number,obj:Comment):Observable<any>{
         return this._service.callApi(
             baseUrl+"/issue/"+userid+"/"+issueid+"/comment",
             "POST",
@@ -214,7 +214,7 @@ export class OpenApi {
             obj
         );
     };
-    updateCodeIssueComment(userid:number,issueid:number,commentid:number,obj:Comment){
+    updateCodeIssueComment(userid:number,issueid:number,commentid:number,obj:Comment):Observable<any>{
         return this._service.callApi(
             baseUrl+"/issue/"+userid+"/"+issueid+"/comment/"+commentid,
             "PUT",
@@ -222,13 +222,13 @@ export class OpenApi {
             obj
         );
     };
-    deleteCodeIssueComment(userid:number,issueid:number,commentid:number){
+    deleteCodeIssueComment(userid:number,issueid:number,commentid:number):Observable<any>{
         return this._service.callApi(
             baseUrl+"/issue/"+userid+"/"+issueid+"/comment/"+commentid,
             "DELETE"
         );
     };
-    getImageIssues(imageid:number,page:number,num:number,key?:string){
+    getImageIssues(imageid:number,page:number,num:number,key?:string):Observable<any>{
         if(page <=0){
             page = 1;
         }
@@ -243,7 +243,7 @@ export class OpenApi {
             "GET"
         );
     };
-    addImageIssue(userid:number,imageid:number,obj:Issue){
+    addImageIssue(userid:number,imageid:number,obj:Issue):Observable<any>{
         return this._service.callApi(
             baseUrl+"/image/"+userid+"/"+imageid+"/issue",
             "POST",
@@ -251,7 +251,7 @@ export class OpenApi {
             obj
         );
     };
-    updateImageIssue(userid:number,imageid:number,issueid:number,obj:Issue){
+    updateImageIssue(userid:number,imageid:number,issueid:number,obj:Issue):Observable<any>{
         return this._service.callApi(
             baseUrl+"/image/"+userid+"/"+imageid+"/issue/"+issueid,
             "PUT",
@@ -259,13 +259,13 @@ export class OpenApi {
             obj
         );
     };
-    deleteImageIssue(userid:number,imageid:number,issueid:number){
+    deleteImageIssue(userid:number,imageid:number,issueid:number):Observable<any>{
         return this._service.callApi(
             baseUrl+"/image/"+userid+"/"+imageid+"/issue/"+issueid,
             "DELETE"
         );
     };
-    getImageIssuesComments(issueid:number,page:number,num:number,key?:string){
+    getImageIssuesComments(issueid:number,page:number,num:number,key?:string):Observable<any>{
         if(page <=0){
             page = 1;
         }
@@ -280,7 +280,7 @@ export class OpenApi {
             "GET"
         );
     };
-    addImageIssueComment(userid:number,issueid:number,obj:Comment){
+    addImageIssueComment(userid:number,issueid:number,obj:Comment):Observable<any>{
         return this._service.callApi(
             baseUrl+"/image/issue/"+userid+"/"+issueid+"/comment",
             "POST",
@@ -288,7 +288,7 @@ export class OpenApi {
             obj
         );
     };
-    updateImageIssueComment(userid:number,issueid:number,commentid:number,obj:Comment){
+    updateImageIssueComment(userid:number,issueid:number,commentid:number,obj:Comment):Observable<any>{
         return this._service.callApi(
             baseUrl+"/image/issue/"+userid+"/"+issueid+"/comment/"+commentid,
             "PUT",
@@ -296,13 +296,13 @@ export class OpenApi {
             obj
         );
     };
-    deleteImageIssueComment(userid:number,issueid:number,commentid:number){
+    deleteImageIssueComment(userid:number,issueid:number,commentid:number):Observable<any>{
         return this._service.callApi(
             baseUrl+"/image/issue/"+userid+"/"+issueid+"/comment/"+commentid,
             "DELETE"
         );
     };
-    getUserInfoById(userid:number){
+    getUserInfoById(userid:number):Observable<any>{
         return this._service.callApi(
             baseUrl+"/user/info/get/"+userid,
             "GET"

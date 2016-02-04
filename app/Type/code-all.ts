@@ -1,5 +1,5 @@
 export interface CodeAll{
-    meta:Step;
+    meta:CodeStep;
     cmds:CodeStepCmd;
     code:CodeDetail;
 }
